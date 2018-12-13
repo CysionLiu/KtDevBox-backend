@@ -1,2 +1,2 @@
-Django==2.0.7
+Django==2.1.4
 pytz==2018.7
