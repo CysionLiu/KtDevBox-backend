@@ -15,3 +15,9 @@ class User(BaseModel):
     selfDesc = models.CharField(max_length=200,null=True)
     avatar = models.CharField(max_length=500)
 
+class Looper(BaseModel):
+    type = models.CharField(max_length=30)
+    mediaId = models.CharField(max_length=30)
+    title = models.CharField(max_length=200)
+    link = models.CharField(max_length=300)
+    picUrl = models.CharField(max_length=300)

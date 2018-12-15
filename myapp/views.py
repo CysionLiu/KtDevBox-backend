@@ -34,10 +34,10 @@ def register(request):
         if len(qr) > 0:
             return JsonResponse(common.build_result(401, "name is duplicate"), safe=False)
         isalt = random.randint(100000, 999999)
-        curtime= int(round(time.time() * 1000))
+        curtime = int(round(time.time() * 1000))
         iuserid = "uid%d" % curtime
         ipwd = hashlib.md5(("%d-%s" % (isalt, rpwd)).encode(encoding='UTF-8')).hexdigest()
-        itoken = common.create_token(iuserid,ipwd,client)
+        itoken = common.create_token(iuserid, ipwd, client)
         from myapp import const
         iavatar = const.inner_headers[random.randint(0, len(const.inner_headers) - 1)]
         u = User(userId=iuserid, pwd=ipwd, name=rusername, avatar=iavatar, salt=isalt, token=itoken)
@@ -66,8 +66,8 @@ def login(request):
         log(ipwd)
         if u.pwd != ipwd:
             return JsonResponse(common.build_result(400, "error password"), safe=False)
-        u.token = common.create_token(u.userId,u.pwd,client)
-        u.selfDesc="haha"
+        u.token = common.create_token(u.userId, u.pwd, client)
+        u.selfDesc = "haha"
         u.save()
         return JsonResponse(common.build_model_data(u), safe=False)
     return JsonResponse(common.build_result(400, "error http method"), safe=False)
@@ -79,9 +79,29 @@ def allusers(request):
         pageNum = request.POST.get("page", '1')
         if admintoken == "I am cysion":
             qr = User.objects.all()
-            pt=paginator.Paginator(qr,10)
-            pages=pt.page(pageNum)
+            pt = paginator.Paginator(qr, 10)
+            pages = pt.page(pageNum)
             log(pages)
             return JsonResponse(common.build_model_list(pages), safe=False)
     return JsonResponse(common.build_result(400, "error http method"), safe=False)
 
+
+def add_looper(request):
+    if request.method == 'POST':
+        params = request.POST
+        if "type" not in params or "mediaId" not in params:
+            return JsonResponse(common.build_result(400, "lack param"), safe=False)
+        r_type = request.POST.get("type", '0')
+        r_id = request.POST.get("mediaId", '1')
+        r_link = request.POST.get("link", '0')
+        r_title = request.POST.get("title", 'title')
+        r_pic = request.POST.get("picUrl", '0')
+        tmp = Looper(type=r_type, mediaId=r_id, link=r_link, title=r_title, picUrl=r_pic)
+        tmp.save()
+        return JsonResponse(common.build_result(200, "success"))
+    return JsonResponse(common.build_result(400, "error http method"), safe=False)
+
+
+def get_looper(request):
+    cr=Looper.objects.all()
+    return JsonResponse(common.build_model_list(cr), safe=False)
