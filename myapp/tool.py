@@ -1,5 +1,5 @@
 
-logdebug = True
+logdebug = False
 def logt(tag,msg):
     if logdebug:
         print("%s,--%s" % (tag,msg))

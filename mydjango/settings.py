@@ -120,6 +120,6 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 # office
-# STATIC_ROOT = '/home/git/ktbox/static/'
+STATIC_ROOT = '/home/git/ktbox/static/'
 # at home
-STATIC_ROOT = '/root/dev/git/ktbox/static/'
+# STATIC_ROOT = '/root/dev/git/ktbox/static/'
