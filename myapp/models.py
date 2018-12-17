@@ -21,3 +21,10 @@ class Looper(BaseModel):
     title = models.CharField(max_length=200)
     link = models.CharField(max_length=300)
     picUrl = models.CharField(max_length=300)
+
+
+class Blog(BaseModel):
+    bid=models.CharField(max_length=30,unique=True)
+    text = models.CharField(max_length=200)
+    authorId = models.CharField(max_length=20)
+    authorHead = models.CharField(max_length=2000)

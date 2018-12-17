@@ -62,6 +62,10 @@ def build_model_list(dataList):
             data.__dict__["modifyStamptime"] = mt.strftime('%Y-%m-%d %H:%M:%S')
         if "_state" in data.__dict__:
             data.__dict__.pop("_state")
+        if "basemodel_ptr_id" in data.__dict__:
+            data.__dict__.pop("basemodel_ptr_id")
+        if "id" in data.__dict__:
+            data.__dict__.pop("id")
         target.append(data.__dict__)
     r["data"] = target
     log(r)
