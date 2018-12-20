@@ -8,12 +8,30 @@ from django.db import models
 from myapp.models import User
 from myapp.tool import log
 
-def create_token(uid,pwd,type):
+from django.http import JsonResponse
+
+
+def ch_login(func):  # 自定义登录验证装饰器
+    def warpper(request, *args, **kwargs):
+        userid = request.META.get("HTTP_USERID", "")
+        r_token = request.META.get("HTTP_TOKEN", "")
+        q = User.objects.filter(userId=userid)
+        if not q.exists():
+            return JsonResponse(build_result("401", "未登录"))
+        print(q.first().token)
+        print(q[0].token)
+        if q.first().token == r_token:
+            return func(request, *args, **kwargs)
+        else:
+            return JsonResponse(build_result("403", "token失效"))
+    return warpper
+
+
+def create_token(uid, pwd, type):
     curtime = int(round(time.time() * 1000))
-    itoken = base64.b64encode(("%s;%s;%s;%d" % (uid, pwd, type,curtime)).encode("utf-8"))
+    itoken = base64.b64encode(("%s;%s;%s;%d" % (uid, pwd, type, curtime)).encode("utf-8"))
     itoken = str(itoken, "utf-8")
     return itoken
-
 
 
 def build_result(code, msg):

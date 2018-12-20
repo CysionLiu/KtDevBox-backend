@@ -2,7 +2,7 @@ import xadmin
 from django.contrib import admin
 
 # Register your models here.
-from myapp.models import User, Looper, Blog
+from myapp.models import User, Looper, MicroBlog
 
 #
 # admin.site.register(User)
@@ -11,4 +11,4 @@ from myapp.models import User, Looper, Blog
 
 xadmin.site.register(User)
 xadmin.site.register(Looper)
-xadmin.site.register(Blog)
+xadmin.site.register(MicroBlog)
