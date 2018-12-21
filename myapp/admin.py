@@ -5,8 +5,8 @@ from django.contrib import admin
 from myapp.models import User, Looper, MicroBlog
 
 #
-# admin.site.register(User)
-# admin.site.register(Looper)
+# adminrrrr.site.register(User)
+# adminrrrr.site.register(Looper)
 
 
 xadmin.site.register(User)

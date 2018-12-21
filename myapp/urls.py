@@ -6,6 +6,7 @@ urlpatterns = [
     path('index', views.index),
     path('register', userview.register),
     path('login', userview.login),
+    path('userdetail', userview.getuser),
     path('allusers', userview.allusers),
     path('addlooper', views.add_looper),
     path('toploopers', views.get_looper),

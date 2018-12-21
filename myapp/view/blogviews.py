@@ -27,7 +27,7 @@ def create_blog(request):
         curtime = int(round(time.time() * 1000))
         r_blogid = hashlib.md5(
             ("%s-%d-%s" % (r_userid, ran, curtime)).encode(encoding='UTF-8')).hexdigest()
-        MicroBlog(blogId=r_blogid, title=r_title, text=r_text, authorHead=avatar,
+        MicroBlog(blogId=r_blogid, title=r_title, text=r_text, icon=avatar,
                   authorId=r_userid).save()
         return JsonResponse(common.build_result(200, "success"))
     return JsonResponse(common.build_result(400, "error http method"), safe=False)
@@ -65,8 +65,6 @@ def update_blog(request):
 def del_blog(request):
     if request.method == 'POST':
         params = request.POST
-        if "title" not in params:
-            return JsonResponse(common.build_result(400, "lack title"), safe=False)
         r_userid = request.META.get("HTTP_USERID")
         r_blogid = request.POST.get("blogId", '')
         qr = User.objects.filter(userId=r_userid)
@@ -149,7 +147,7 @@ def get_blogs(request):
         pageNum = request.GET.get("page", '1')
     if pageNum == 0:
         pageNum = 1
-    qr = MicroBlog.objects.all().filter(isDeleted=0)
+    qr = MicroBlog.objects.all().filter(isDeleted=0).order_by("createTime")
     pt = paginator.Paginator(qr, 10)
     pages = pt.page(pageNum)
     return JsonResponse(common.build_model_list(pages), safe=False)

@@ -21,7 +21,7 @@ from mydjango import views
 
 prefix = "app/"
 urlpatterns = [
-    # path('admin/', admin.site.urls),
+    # path('adminrrrr/', adminrrrr.site.urls),
     path('xadmin/', xadmin.site.urls),
     path('', views.index),
     path(prefix, include("myapp.urls"))
