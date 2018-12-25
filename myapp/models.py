@@ -12,7 +12,8 @@ class User(BaseModel):
     pwd = models.CharField("加盐密码", max_length=200)
     token = models.CharField("口令", max_length=120)
     salt = models.IntegerField()
-    name = models.CharField("用户名", max_length=20)
+    name = models.CharField("用户名", max_length=20,default='匿名')
+    nickname = models.CharField("昵称", max_length=120)
     selfDesc = models.CharField("用户描述", max_length=200, null=True)
     avatar = models.CharField("用户头像", max_length=500)
 

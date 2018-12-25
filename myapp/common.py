@@ -1,14 +1,12 @@
 import base64
 import time
-from datetime import datetime
-from time import strftime
-
-from django.db import models
 
 from myapp.models import User
 from myapp.tool import log
 
 from django.http import JsonResponse
+
+from myapp.const import *
 
 
 def ch_login(func):  # 自定义登录验证装饰器
@@ -17,13 +15,14 @@ def ch_login(func):  # 自定义登录验证装饰器
         r_token = request.META.get("HTTP_TOKEN", "")
         q = User.objects.filter(userId=userid)
         if not q.exists():
-            return JsonResponse(build_result("401", "未登录"))
+            return JsonResponse(build_result(NO_AUTH, "未登录"))
         print(q.first().token)
         print(q[0].token)
         if q.first().token == r_token:
             return func(request, *args, **kwargs)
         else:
-            return JsonResponse(build_result("403", "token失效"))
+            return JsonResponse(build_result(NO_AUTH, "token失效"))
+
     return warpper
 
 
@@ -92,7 +91,7 @@ def build_model_list(dataList):
 
 def buildjson(data):
     if isinstance(data, dict):
-        r = build_result(200, "success")
+        r = build_result(SUCCESS, "success")
         r["data"] = data
         return r
-    return build_result(500, "inner error")
+    return build_result(SERVER_ERROR, SERVER_ERROR_MSG)
