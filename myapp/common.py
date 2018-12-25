@@ -15,9 +15,7 @@ def ch_login(func):  # 自定义登录验证装饰器
         r_token = request.META.get("HTTP_TOKEN", "")
         q = User.objects.filter(userId=userid)
         if not q.exists():
-            return JsonResponse(build_result(NO_AUTH, "未登录"))
-        print(q.first().token)
-        print(q[0].token)
+            return JsonResponse(build_result("401", "未登录"))
         if q.first().token == r_token:
             return func(request, *args, **kwargs)
         else:
