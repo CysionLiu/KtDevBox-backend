@@ -39,6 +39,7 @@ class MicroBlog(BaseModel):
     prideCount = models.PositiveIntegerField("点赞数", default=0)
     isCollected = models.IntegerField(choices=CHOICES, default=NOT_HAVE)
     isDeleted = models.IntegerField(choices=CHOICES, default=NOT_HAVE)
+    isLargeIcon = models.IntegerField(choices=CHOICES, default=NOT_HAVE)
 
 
 class Pride(BaseModel):

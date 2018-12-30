@@ -19,7 +19,7 @@ def ch_login(func):  # 自定义登录验证装饰器
         if q.first().token == r_token:
             return func(request, *args, **kwargs)
         else:
-            return JsonResponse(build_result(NO_AUTH, "token失效"))
+            return JsonResponse(build_result(NO_AUTH, "token失效，请重新登录"))
 
     return warpper
 

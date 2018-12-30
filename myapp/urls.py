@@ -15,6 +15,7 @@ urlpatterns = [
     path('blog/update', blogviews.update_blog),
     path('blog/del', blogviews.del_blog),
     path('blog/list', blogviews.get_blogs),
+    path('blog/userlist', blogviews.get_user_blogs),
     path('blog/get/<str:blog_id>', blogviews.get_blog),
     path('blog/pride', blogviews.pride_blog),
     path('blog/unpride', blogviews.un_pride_blog),

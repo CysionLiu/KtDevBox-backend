@@ -19,20 +19,24 @@ def create_blog(request):
         r_userid = request.META.get("HTTP_USERID")
         r_text = request.POST.get("text", '0')
         r_title = request.POST.get("title", '')
-        r_icon = request.POST.get("icon", '')
+        r_icon = request.POST.get("icon", None)
         qr = User.objects.filter(userId=r_userid)
+        largeicon = 0
         if len(qr) == 0:
             return JsonResponse(common.build_result(CLIENT_ERROR, NO_THIS_USER), safe=False)
         if r_icon is None:
-            avatar = const.inner_headers[random.randint(0, len(const.inner_headers) - 1)]
-        else:
-            avatar = r_icon
+            r = random.randint(0, 1)
+            if r == 0:
+                r_icon = const.inner_small_icons[random.randint(0, len(const.inner_small_icons) - 1)]
+            else:
+                largeicon = 1
+                r_icon = const.inner_big_icons[random.randint(0, len(const.inner_big_icons) - 1)]
         ran = random.randint(1, 100)
         curtime = int(round(time.time() * 1000))
         r_blogid = hashlib.md5(
             ("%s-%d-%s" % (r_userid, ran, curtime)).encode(encoding='UTF-8')).hexdigest()
-        MicroBlog(blogId=r_blogid, title=r_title, text=r_text, icon=avatar,
-                  authorId=r_userid).save()
+        MicroBlog(blogId=r_blogid, title=r_title, text=r_text, icon=r_icon,
+                  authorId=r_userid, isLargeIcon=largeicon).save()
         return JsonResponse(common.build_result(SUCCESS, "success"))
     return JsonResponse(common.build_result(CLIENT_ERROR, ERROR_REQ_METHOD), safe=False)
 
@@ -161,6 +165,26 @@ def get_blogs(request):
     if pageNum == 0:
         pageNum = 1
     qr = MicroBlog.objects.all().filter(isDeleted=0).order_by("createTime")
+    pt = paginator.Paginator(qr, 10)
+    try:
+        pages = pt.page(pageNum)
+        return JsonResponse(common.build_model_list(pages), safe=False)
+    except:
+        return JsonResponse(common.build_result(CLIENT_ERROR, "没有更多数据"), safe=False)
+
+
+# 获取某个用户的博客列表
+@ch_login
+def get_user_blogs(request):
+    r_userid = request.META.get("HTTP_USERID")
+    pageNum = 1
+    if request.method == 'POST':
+        pageNum = request.POST.get("page", '1')
+    if request.method == 'GET':
+        pageNum = request.GET.get("page", '1')
+    if pageNum == 0:
+        pageNum = 1
+    qr = MicroBlog.objects.all().filter(authorId=r_userid).filter(isDeleted=0).order_by("createTime")
     pt = paginator.Paginator(qr, 10)
     try:
         pages = pt.page(pageNum)

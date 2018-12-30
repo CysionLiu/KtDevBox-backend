@@ -109,9 +109,9 @@ def update_user(request):
         user = qr[0]
         if r_desc is not None:
             user.selfDesc = r_desc
-        if not r_avatar is None:
+        if not r_avatar is None and r_avatar.startswith("http"):
             user.avatar = r_avatar
-        if not r_nickname is None:
+        if not r_nickname is None and len(r_nickname) > 0:
             user.nickname = r_nickname
         user.save()
         return JsonResponse(common.build_model_data(qr[0]), safe=False)
