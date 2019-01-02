@@ -12,7 +12,7 @@ class User(BaseModel):
     pwd = models.CharField("加盐密码", max_length=200)
     token = models.CharField("口令", max_length=120)
     salt = models.IntegerField()
-    name = models.CharField("用户名", max_length=20,default='匿名')
+    name = models.CharField("用户名", max_length=20, default='匿名')
     nickname = models.CharField("昵称", max_length=120)
     selfDesc = models.CharField("用户描述", max_length=200, null=True)
     avatar = models.CharField("用户头像", max_length=500)
@@ -38,10 +38,24 @@ class MicroBlog(BaseModel):
     icon = models.CharField("作者头像", max_length=2000)
     prideCount = models.PositiveIntegerField("点赞数", default=0)
     isCollected = models.IntegerField(choices=CHOICES, default=NOT_HAVE)
+    isPrided = models.IntegerField(choices=CHOICES, default=NOT_HAVE)
     isDeleted = models.IntegerField(choices=CHOICES, default=NOT_HAVE)
     isLargeIcon = models.IntegerField(choices=CHOICES, default=NOT_HAVE)
 
 
 class Pride(BaseModel):
     blogId = models.CharField("博客id", max_length=33, db_index=True)
-    authorId = models.CharField("作者id", max_length=20, db_index=True)
+    authorId = models.CharField("用户id", max_length=20, db_index=True)
+
+
+class Collect(BaseModel):
+    BLOG = 0
+    NEWS = 1
+    MUSIC = 2
+    CHOICES = ((BLOG, "博客"), (NEWS, "新闻"), (NEWS, "音乐"))
+    itemId = models.CharField("记录id", max_length=80, db_index=True)
+    authorId = models.CharField("用户id", max_length=20, db_index=True)
+    colType = models.IntegerField("收藏类型", choices=CHOICES)
+    linkUrl = models.CharField(max_length=1000)
+    itemTitle = models.CharField(max_length=200)
+    coverImg = models.CharField("封面图片", max_length=1000)
