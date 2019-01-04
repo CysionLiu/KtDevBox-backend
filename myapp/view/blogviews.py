@@ -6,7 +6,7 @@ from django.http import JsonResponse
 
 from myapp import common, const
 from myapp.common import ch_login
-from myapp.models import User, MicroBlog, Pride, Collect
+from myapp.models import User, MicroBlog, Pride, Collect, Comment
 from myapp.const import *
 
 
@@ -93,28 +93,31 @@ def del_blog(request):
         if blog.authorId != r_userid:
             return JsonResponse(common.build_result(FATAL_WORK, "无权删除该博客"), safe=False)
         blog.delete()
-        # //删除点赞
+        # 删除点赞
         Pride.objects.filter(blogId=r_blogid).delete()
         # 删除收藏
         Collect.objects.filter(itemId=r_blogid).delete()
+        # 删除评论
+        Comment.objects.filter(parentId=r_blogid).delete()
         return JsonResponse(common.build_result(SUCCESS, "success"))
     return JsonResponse(common.build_result(CLIENT_ERROR, ERROR_REQ_METHOD), safe=False)
 
 
-#
+# 获取某个博客
 def get_blog(request, blog_id):
     r_userid = request.META.get("HTTP_USERID")
     qr = MicroBlog.objects.filter(blogId=blog_id)
     if len(qr) == 0:
         return JsonResponse(common.build_result(NO_RESOURCE, "博客不存在"), safe=False)
     blog = qr[0]
-    if len(Pride.objects.filter(authorId=r_userid).filter(blogId=blog_id))>0:
-        blog.isPrided=MicroBlog.HAVE
-    if len(Collect.objects.filter(authorId=r_userid).filter(itemId=blog_id))>0:
-        blog.isCollected=MicroBlog.HAVE
+    if len(Pride.objects.filter(authorId=r_userid).filter(blogId=blog_id)) > 0:
+        blog.isPrided = MicroBlog.HAVE
+    if len(Collect.objects.filter(authorId=r_userid).filter(itemId=blog_id)) > 0:
+        blog.isCollected = MicroBlog.HAVE
     return JsonResponse(common.build_model_data(blog), safe=False)
 
 
+# 获取所有博客列表
 def get_blogs(request):
     r_userid = request.META.get("HTTP_USERID")
     pageNum = 1

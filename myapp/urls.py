@@ -1,6 +1,6 @@
 from django.urls import path
 
-from myapp.view import views, blogviews, userview, prideviews, collectviews
+from myapp.view import views, blogviews, userview, prideviews, collectviews, commentviews
 
 urlpatterns = [
     path('index', views.index),
@@ -23,4 +23,6 @@ urlpatterns = [
     path('blog/uncollect', collectviews.un_collect),
     path('blog/iscollected', collectviews.is_collected),
     path('blog/collections', collectviews.get_collections),
+    path('blog/comment', commentviews.comment),
+    path('blog/comments/list', commentviews.get_comments),
 ]

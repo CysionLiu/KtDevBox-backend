@@ -37,6 +37,7 @@ class MicroBlog(BaseModel):
     authorId = models.CharField("作者id", max_length=20, db_index=True)
     icon = models.CharField("作者头像", max_length=2000)
     prideCount = models.PositiveIntegerField("点赞数", default=0)
+    commentCount = models.PositiveIntegerField("评论数", default=0)
     isCollected = models.IntegerField(choices=CHOICES, default=NOT_HAVE)
     isPrided = models.IntegerField(choices=CHOICES, default=NOT_HAVE)
     isDeleted = models.IntegerField(choices=CHOICES, default=NOT_HAVE)
@@ -63,3 +64,15 @@ class Collect(BaseModel):
     itemTitle = models.CharField(max_length=200)
     coverImg = models.CharField("封面图片", max_length=1000)
     isLargeIcon = models.IntegerField(choices=CHOICES, default=NOT_HAVE)
+
+
+class Comment(BaseModel):
+    FIRST = 1
+    SECOND = 2
+    CHOICES = ((FIRST, "一级"), (SECOND, "二级"))
+    parentId = models.CharField("父级id", max_length=33, db_index=True)
+    authorId = models.CharField("用户id", max_length=30, db_index=True)
+    authorName = models.CharField("用户昵称", max_length=100)
+    authorAvatar = models.CharField("作者头像", max_length=1000)
+    content = models.CharField("评论内容", max_length=2000)
+    type = models.IntegerField("评论类型", choices=CHOICES)
