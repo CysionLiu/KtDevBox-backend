@@ -154,7 +154,7 @@ def get_user_blogs(request):
         pageNum = 1
     qr = MicroBlog.objects.all().filter(authorId=r_userid).filter(isDeleted=0).order_by(
         "-createTime")
-    pt = paginator.Paginator(qr, 10)
+    pt = paginator.Paginator(qr, 50)
     try:
         pages = pt.page(pageNum)
         tmp_pride = Pride.objects.filter(authorId=r_userid)

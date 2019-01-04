@@ -49,6 +49,9 @@ class Pride(BaseModel):
 
 
 class Collect(BaseModel):
+    HAVE = 1
+    NOT_HAVE = 0
+    CHOICES = ((HAVE, "大图"), (NOT_HAVE, "小图"))
     BLOG = 0
     NEWS = 1
     MUSIC = 2
@@ -59,3 +62,4 @@ class Collect(BaseModel):
     linkUrl = models.CharField(max_length=1000)
     itemTitle = models.CharField(max_length=200)
     coverImg = models.CharField("封面图片", max_length=1000)
+    isLargeIcon = models.IntegerField(choices=CHOICES, default=NOT_HAVE)

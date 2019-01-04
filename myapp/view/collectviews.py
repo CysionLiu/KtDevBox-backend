@@ -43,7 +43,7 @@ def collect(request):
         if len(b_qr) == 0:
             return JsonResponse(common.build_result(CLIENT_ERROR, "该博客不存在"), safe=False)
         Collect(itemId=itemId, authorId=r_userid, itemTitle=b_qr[0].title
-                , linkUrl="", coverImg=b_qr[0].icon, colType=Collect.BLOG).save()
+                , linkUrl="", coverImg=b_qr[0].icon, colType=Collect.BLOG,isLargeIcon=b_qr[0].isLargeIcon).save()
         return JsonResponse(common.build_result(SUCCESS, "success"), safe=False)
     # 其它收藏
     else:
