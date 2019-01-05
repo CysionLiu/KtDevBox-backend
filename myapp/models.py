@@ -20,7 +20,7 @@ class User(BaseModel):
 
 class Looper(BaseModel):
     type = models.CharField("类型", max_length=30)
-    mediaId = models.CharField("媒体Id", max_length=30)
+    mediaId = models.CharField("媒体Id", max_length=65)
     title = models.CharField("标题", max_length=200)
     link = models.CharField("链接", max_length=300)
     picUrl = models.CharField("图片地址", max_length=300)
