@@ -1,8 +1,24 @@
 ##### KtDevBox项目的后端项目
 
+开发基于Python 3.6, Django 2.14
+
+已部署至一个简单的服务器，基于Centos+uwsgi+nginx
+
+域名备案比较麻烦，练手之用，就不备案了。
+
+本人主攻方向不是后端，本项目主要是服务于一安卓项目，感兴趣的可以看看：
+
+
+[KtDevBox](https://github.com/CysionLiu/KtDevBox)
+
+
+该项目文档完善中。。。
+
+
+
 ### 主域名
 
-www.cysion.club/app/
+http://148.70.2.189/app/
 
 
 **1. 注册**
