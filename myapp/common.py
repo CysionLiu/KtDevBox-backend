@@ -62,7 +62,6 @@ def build_model_data(data):
     return r
 
 
-
 def build_model_list(dataList):
     r = build_result(200, "success")
     target = []
@@ -94,3 +93,26 @@ def buildjson(data):
         r["data"] = data
         return r
     return build_result(SERVER_ERROR, SERVER_ERROR_MSG)
+
+
+# 处理queryset，返回list
+def adjust_list(lists):
+    target = []
+    for data in lists:
+        log(data.__dict__)
+        if "createTime" in data.__dict__:
+            ct = data.__dict__.get("createTime")
+            data.__dict__.pop("createTime")
+            data.__dict__["createStamptime"] = ct.strftime('%Y-%m-%d %H:%M:%S')
+        if "modifyTime" in data.__dict__:
+            mt = data.__dict__.get("modifyTime")
+            data.__dict__.pop("modifyTime")
+            data.__dict__["modifyStamptime"] = mt.strftime('%Y-%m-%d %H:%M:%S')
+        if "_state" in data.__dict__:
+            data.__dict__.pop("_state")
+        if "basemodel_ptr_id" in data.__dict__:
+            data.__dict__.pop("basemodel_ptr_id")
+        if "id" in data.__dict__:
+            data.__dict__.pop("id")
+        target.append(data.__dict__)
+    return target

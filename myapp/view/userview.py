@@ -1,4 +1,5 @@
 import hashlib
+import json
 import random
 import re
 
@@ -8,8 +9,8 @@ from django.core import paginator
 from django.http import JsonResponse
 
 from myapp import common
-from myapp.common import ch_login
-from myapp.models import User
+from myapp.common import ch_login, adjust_list
+from myapp.models import User, MicroBlog
 from myapp.const import *
 
 
@@ -89,6 +90,30 @@ def getuser(request):
     r_userid = request.META.get("HTTP_USERID", "")
     qr = User.objects.filter(userId=r_userid)
     return JsonResponse(common.build_model_data(qr[0]), safe=False)
+
+
+def get_other_user(request):
+    if request.method == 'POST':
+        req_type = request.content_type
+        if ("application/json" not in req_type):
+            return JsonResponse(common.build_result(CLIENT_ERROR, "请求格式需为application/json"),
+                                safe=False)
+        req_json = json.loads(request.body)
+        req_userid = req_json.get("userid");
+        qr = User.objects.filter(userId=req_userid)
+        if len(qr) < 1:
+            return JsonResponse(common.build_result(CLIENT_ERROR, NO_THIS_USER),
+                                safe=False)
+        # 找到用户信息
+        user = qr[0]
+        user.__dict__.pop("token")
+        resp=common.build_model_data(user)
+        # 找到用户博客
+        qr_blog = MicroBlog.objects.all().filter(authorId=req_userid).filter(isDeleted=0).order_by("-createTime")
+        bloglist = adjust_list(qr_blog)
+        resp["blogs"] = bloglist;
+        return JsonResponse(resp, safe=False)
+    return JsonResponse(common.build_result(CLIENT_ERROR, ERROR_REQ_METHOD), safe=False)
 
 
 @ch_login
