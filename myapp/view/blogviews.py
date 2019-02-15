@@ -36,8 +36,10 @@ def create_blog(request):
         curtime = int(round(time.time() * 1000))
         r_blogid = hashlib.md5(
             ("%s-%d-%s" % (r_userid, ran, curtime)).encode(encoding='UTF-8')).hexdigest()
+        qr_user = (User.objects.filter(userId=r_userid))[0]
         MicroBlog(blogId=r_blogid, title=r_title, text=r_text, icon=r_icon,
-                  authorId=r_userid, isLargeIcon=largeicon).save()
+                  authorId=r_userid, isLargeIcon=largeicon,authorName=qr_user.nickname
+                  ,authorAvatar=qr_user.avatar).save()
         return JsonResponse(common.build_result(SUCCESS, "success"))
     return JsonResponse(common.build_result(CLIENT_ERROR, ERROR_REQ_METHOD), safe=False)
 
@@ -105,7 +107,6 @@ def del_blog(request):
 
 # 获取某个博客
 def get_blog(request, blog_id):
-    adjust_blogs_author()
     r_userid = request.META.get("HTTP_USERID")
     qr = MicroBlog.objects.filter(blogId=blog_id)
     if len(qr) == 0:
@@ -116,16 +117,16 @@ def get_blog(request, blog_id):
     if len(Collect.objects.filter(authorId=r_userid).filter(itemId=blog_id)) > 0:
         blog.isCollected = MicroBlog.HAVE
     return JsonResponse(common.build_model_data(blog), safe=False)
-
-
-def adjust_blogs_author():
-    qr = MicroBlog.objects.all().order_by("-createTime")
-    for d in qr:
-        if isinstance(d, MicroBlog):
-            qr_user = (User.objects.filter(userId=d.authorId))[0]
-            d.authorName = qr_user.nickname
-            d.authorAvatar = qr_user.avatar
-            d.save()
+#
+#
+# def adjust_blogs_author():
+#     qr = MicroBlog.objects.all().order_by("-createTime")
+#     for d in qr:
+#         if isinstance(d, MicroBlog):
+#             qr_user = (User.objects.filter(userId=d.authorId))[0]
+#             d.authorName = qr_user.nickname
+#             d.authorAvatar = qr_user.avatar
+#             d.save()
 
 
 # 获取所有博客列表
