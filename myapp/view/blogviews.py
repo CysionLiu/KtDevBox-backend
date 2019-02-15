@@ -105,6 +105,7 @@ def del_blog(request):
 
 # 获取某个博客
 def get_blog(request, blog_id):
+    adjust_blogs_author()
     r_userid = request.META.get("HTTP_USERID")
     qr = MicroBlog.objects.filter(blogId=blog_id)
     if len(qr) == 0:
@@ -115,6 +116,16 @@ def get_blog(request, blog_id):
     if len(Collect.objects.filter(authorId=r_userid).filter(itemId=blog_id)) > 0:
         blog.isCollected = MicroBlog.HAVE
     return JsonResponse(common.build_model_data(blog), safe=False)
+
+
+def adjust_blogs_author():
+    qr = MicroBlog.objects.all().order_by("-createTime")
+    for d in qr:
+        if isinstance(d, MicroBlog):
+            qr_user = (User.objects.filter(userId=d.authorId))[0]
+            d.authorName = qr_user.nickname
+            d.authorAvatar = qr_user.avatar
+            d.save()
 
 
 # 获取所有博客列表
@@ -144,7 +155,7 @@ def get_blogs(request):
         return JsonResponse(common.build_result(CLIENT_ERROR, "没有更多数据"), safe=False)
 
 
-# 获取某个用户的博客列表
+# 获取登录用户的博客列表
 @ch_login
 def get_user_blogs(request):
     r_userid = request.META.get("HTTP_USERID")

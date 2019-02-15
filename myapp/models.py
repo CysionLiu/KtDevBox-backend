@@ -35,13 +35,15 @@ class MicroBlog(BaseModel):
     title = models.CharField("标题", max_length=140)
     text = models.CharField("正文", max_length=10000, null=True)
     authorId = models.CharField("作者id", max_length=20, db_index=True)
-    icon = models.CharField("作者头像", max_length=2000)
+    icon = models.CharField("博客图片", max_length=2000)
     prideCount = models.PositiveIntegerField("点赞数", default=0)
     commentCount = models.PositiveIntegerField("评论数", default=0)
     isCollected = models.IntegerField(choices=CHOICES, default=NOT_HAVE)
     isPrided = models.IntegerField(choices=CHOICES, default=NOT_HAVE)
     isDeleted = models.IntegerField(choices=CHOICES, default=NOT_HAVE)
     isLargeIcon = models.IntegerField(choices=CHOICES, default=NOT_HAVE)
+    authorName = models.CharField("用户昵称", max_length=120)
+    authorAvatar = models.CharField("用户头像", max_length=500)
 
 
 class Pride(BaseModel):
