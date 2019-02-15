@@ -111,7 +111,7 @@ def get_other_user(request):
         # 找到用户博客
         qr_blog = MicroBlog.objects.all().filter(authorId=req_userid).filter(isDeleted=0).order_by("-createTime")
         bloglist = adjust_list(qr_blog)
-        resp["blogs"] = bloglist;
+        user.blogs = bloglist;
         return JsonResponse(resp, safe=False)
     return JsonResponse(common.build_result(CLIENT_ERROR, ERROR_REQ_METHOD), safe=False)
 
