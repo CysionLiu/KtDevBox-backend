@@ -1,13 +1,15 @@
 
+### 一套免费、简单、逻辑比较全面的接口
+
 
 开发基于Python 3.6 - Django 2.14，已部署至一个简单的服务器，基于Centos+uwsgi+nginx
 
-域名备案比较麻烦，练手之用，就不备案了，完全不影响使用。
+域名备案比较麻烦，练手之用，就不备案了，**完全不影响使用**。
 
 网上常见的免费接口，多为GET请求，一般不支持POST方法，POST json数据或者Header头参数，本项目主要补充这方面需求，服务于感兴趣的童鞋。
 
 
-[一个安卓项目KtDevBox，用到了这里面所有的接口](https://github.com/CysionLiu/KtDevBox)
+[一个安卓项目KtDevBox，用到了这里面所有的接口，感兴趣的可以看看](https://github.com/CysionLiu/KtDevBox)
 
 
 
@@ -24,10 +26,12 @@ userid 和 token
 
 ### 接口列表
 
-- [用户相关，注册登录用户信息等](./apidoc/user.md)
-- [博客相关，博客增删改查](./apidoc/blog.md)
-- [用户操作博客相关，收藏评论赞]()
-- [其它，轮播等]()
+- [用户相关信息](./apidoc/user.md)
+- [博客增删改查](./apidoc/blog.md)
+- [博客点赞相关](./apidoc/pride.md)
+- [博客收藏相关](./apidoc/collect.md)
+- [博客评论相关](./apidoc/comment.md)
+- [其它，轮播等](./apidoc/other.md)
 
 
 
