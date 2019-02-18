@@ -1,15 +1,14 @@
-##### KtDevBox项目的后端项目
-
-开发基于Python 3.6, Django 2.14
-
-已部署至一个简单的服务器，基于Centos+uwsgi+nginx
-
-域名备案比较麻烦，练手之用，就不备案了。
-
-本人主攻方向不是后端，本项目主要是服务于一安卓项目，感兴趣的可以看看：
 
 
-[KtDevBox](https://github.com/CysionLiu/KtDevBox)
+开发基于Python 3.6, Django 2.14,已部署至一个简单的服务器，基于Centos+uwsgi+nginx
+
+域名备案比较麻烦，练手之用，就不备案了，完全不影响使用。
+
+网上常见的免费接口，多为GET请求，一般也不支持Header或者POST json数据，本项目主要补充这方面需求，服务于感兴趣的童鞋。
+练手可用，切忌用于商业项目。
+
+[一个安卓项目KtDevBox，用到了这里面所有的接口](https://github.com/CysionLiu/KtDevBox)
+
 
 
 ### 主域名
@@ -49,7 +48,7 @@ userid 和 token
 
 500 服务器逻辑处理错误(若发生，需issue下)；
 
-### 返回格式
+### 返回格式示例
 ```
 {
     "code": 200,
@@ -60,6 +59,7 @@ userid 和 token
 
 
 
+觉的不错，请右上角Star一下
 
 
 
