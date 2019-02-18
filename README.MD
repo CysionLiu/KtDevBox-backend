@@ -12,181 +12,51 @@
 [KtDevBox](https://github.com/CysionLiu/KtDevBox)
 
 
-该项目文档完善中。。。
-
-
-
 ### 主域名
 
 http://148.70.2.189/app/
 
+### 公共Header
 
-**1. 注册**
+若需要，则必传，目前是两个字段：
 
-路径： register
-
-方法:  post
-
-header: 无
-
-body:
+userid 和 token
 
 
-参数 | 类型 | 是否必填
----|---|---
-username | String| 是
-password | String| 是
-password2 | String| 是
+### 接口列表
+
+- [用户相关，注册登录用户信息等](./apidoc/user.md)
+- [博客相关，博客增删改查]()
+- [用户操作博客相关，收藏评论赞]()
+- [其它，轮播等]()
 
 
-返回值：
+
+### 状态码
+
+对应返回值json里面的code字段:
 
 
+200 表示请求成功，获得了正确的json;
+
+400 表示客户端错误，一般是指方法不对或者传错参数
+
+402 错误的操作 一般指逻辑上失败，比如没有点过赞时，执行点赞操作；
+
+403 没有权限，比如用户删除非自己的博客；
+
+404 没有找到资源；
+
+500 服务器逻辑处理错误(若发生，需issue下)；
+
+### 返回格式
 ```
 {
     "code": 200,
-    "msg": "success",
-    "data": {
-        "userId": "uid1545484862347",
-        "token": "dWlkMTU0NTQ4NDg2MjM0NzsxZDc0MjBmZDA3NzkzNWU0Nzg2MGY3MGI3MjNhZmY0MDthcHA7MTU0NTQ4NDg2MjM0Nw==",
-        "name": "cysion",
-        "selfDesc": null,
-        "avatar": "https://pic.qqtn.com/up/2018-12/2018121407591215403.jpg",
-        "createStamptime": "2018-12-22 21:21:02",
-        "modifyStamptime": "2018-12-22 21:21:02"
-    }
-}
-
-```
-
-**2. 登录**
-
-路径： login
-
-方法:  post
-
-header: 无
-
-body:
-
-
-参数 | 类型 | 是否必填
----|---|---
-username | String| 是
-password | String| 是
-
-
-返回值 ：
-
-```
-{
-    "code": 200,
-    "msg": "success",
-    "data": {
-        "userId": "uid1545484862347",
-        "token": "dWlkMTU0NTQ4NDg2MjM0NzsxZDc0MjBmZDA3NzkzNWU0Nzg2MGY3MGI3MjNhZmY0MDthcHA7MTU0NTQ4NDg5OTA0Ng==",
-        "name": "cysion",
-        "selfDesc": null,
-        "avatar": "https://pic.qqtn.com/up/2018-12/2018121407591215403.jpg",
-        "createStamptime": "2018-12-22 21:21:02",
-        "modifyStamptime": "2018-12-22 21:21:39"
-    }
+    "msg": "success"
+    "data":"主体数据(可能没有该字段)"
 }
 ```
-
-
-
-**3. 获取用户信息**
-
-路径： userdetail
-
-方法:  post
-
-header:
-
-
-参数 | 类型 | 是否必填
----|---|---
-userid | String| 是
-token | String| 是
-
-
-body: 无
-
----
-
-
-
-**4. 获取轮播**
-
-路径： toploopers
-
-方法:  get
-
-header: 无
-
-body: 无
-
-
-返回值 ：
-
-```
-
-```
-
----
-
-
-
-**5. 创建博客**
-
-路径： blog/add
-
-方法:  post
-
-header :
-
-
-参数 | 类型 | 是否必填
----|---|---
-userid | String| 是
-token | String| 是
-
-body :
-
-参数 | 类型 | 是否必填
----|---|---
-title | String| 是
-text | String| 否
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
