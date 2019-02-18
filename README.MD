@@ -1,11 +1,11 @@
 
 
-开发基于Python 3.6, Django 2.14,已部署至一个简单的服务器，基于Centos+uwsgi+nginx
+开发基于Python 3.6 - Django 2.14，已部署至一个简单的服务器，基于Centos+uwsgi+nginx
 
 域名备案比较麻烦，练手之用，就不备案了，完全不影响使用。
 
-网上常见的免费接口，多为GET请求，一般也不支持Header或者POST json数据，本项目主要补充这方面需求，服务于感兴趣的童鞋。
-练手可用，切忌用于商业项目。
+网上常见的免费接口，多为GET请求，一般不支持POST方法，POST json数据或者Header头参数，本项目主要补充这方面需求，服务于感兴趣的童鞋。
+
 
 [一个安卓项目KtDevBox，用到了这里面所有的接口](https://github.com/CysionLiu/KtDevBox)
 
@@ -25,7 +25,7 @@ userid 和 token
 ### 接口列表
 
 - [用户相关，注册登录用户信息等](./apidoc/user.md)
-- [博客相关，博客增删改查]()
+- [博客相关，博客增删改查](./apidoc/blog.md)
 - [用户操作博客相关，收藏评论赞]()
 - [其它，轮播等]()
 
@@ -59,11 +59,25 @@ userid 和 token
 
 
 
-觉的不错，请右上角Star一下
+### 觉的不错，请右上角Star一下
 
 
 
+### License
 
+Copyright 2019 CysionLiu
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 
 
 
